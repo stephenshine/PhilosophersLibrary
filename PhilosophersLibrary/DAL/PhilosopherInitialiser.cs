@@ -10,7 +10,7 @@ namespace PhilosophersLibrary.DAL
     {
         protected override void Seed(PhilosopherContext context)
         {
-                var philosophers = new List<Philosopher>{
+            var philosophers = new List<Philosopher>{
                 new Philosopher {
                     FirstName = "Bertrand",
                     LastName = "Russell",
@@ -42,7 +42,6 @@ namespace PhilosophersLibrary.DAL
                     Description = "Here's some text about John Rawls"
                 }
             };
-
             philosophers.ForEach(p => context.Philosophers.Add(p));
             context.SaveChanges();
 

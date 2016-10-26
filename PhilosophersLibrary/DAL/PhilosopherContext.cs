@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using PhilosophersLibrary.Models.Entities;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace PhilosophersLibrary.DAL
 {
@@ -18,6 +19,7 @@ namespace PhilosophersLibrary.DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Book>()
