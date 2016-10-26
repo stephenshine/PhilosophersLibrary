@@ -40,7 +40,7 @@ namespace PhilosophersLibrary.DAL
                     NationalityID = 9,
                     AreaID = 3,
                     Description = "Here's some text about John Rawls"
-                },
+                }
             };
 
             philosophers.ForEach(p => context.Philosophers.Add(p));
