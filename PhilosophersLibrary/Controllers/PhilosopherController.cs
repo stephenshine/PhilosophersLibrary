@@ -17,8 +17,7 @@ namespace PhilosophersLibrary.Controllers
 
         public ActionResult Index()
         {
-            var philosophers = db.Philosophers.Include(p => p.Area).Include(p => p.Nationality);
-            return View(philosophers.ToList());
+            return View(db.Philosophers.ToList());
         }
 
         // GET: Philosopher/Details/5

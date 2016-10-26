@@ -16,5 +16,15 @@ namespace PhilosophersLibrary.DAL
         public DbSet<Nationality> Nationalities { get; set; }
         public DbSet<Book> Books { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Book>()
+                .HasRequired(p => p.Philosopher)
+                .WithMany()
+                .HasForeignKey(p => p.PhilosopherID)
+                .WillCascadeOnDelete(false);
+        }
     }
 }

@@ -34,8 +34,8 @@ namespace PhilosophersLibrary.DAL
                 new Philosopher {
                     FirstName = "John",
                     LastName = "Rawls",
-                    DateOfBirth = DateTime.Parse("1921-21-02"),
-                    DateOfDeath = DateTime.Parse("2002-84-11"),
+                    DateOfBirth = DateTime.Parse("1921-02-21"),
+                    DateOfDeath = DateTime.Parse("2002-11-24"),
                     IsAlive = false,
                     NationalityID = 9,
                     AreaID = 3,
