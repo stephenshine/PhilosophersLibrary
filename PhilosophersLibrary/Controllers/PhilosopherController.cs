@@ -43,13 +43,15 @@ namespace PhilosophersLibrary.Controllers
             return View();
         }
 
-        // POST: Philosopher/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Bind, include tells the model binder which attributes the user is able to submit through the site. 
+        // It's a security measure to stop users from overposting to the site.
+        // Can also use exclude to prevent attrtibutes from being submitted.
+        // AntiForgeryToken also prevents cross-site request forgery. Requires corresponding AntiForgeryToken in form
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PhilosopherID,FirstName,LastName,DateOfBirth,DateOfDeath,IsAlive,Description,NationalityID,AreaID")] Philosopher philosopher)
         {
+            // Causes any clientside validation to be executed
             if (ModelState.IsValid)
             {
                 db.Philosophers.Add(philosopher);
