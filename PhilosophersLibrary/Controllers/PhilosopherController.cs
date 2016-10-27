@@ -20,7 +20,7 @@ namespace PhilosophersLibrary.Controllers
             return View(db.Philosophers.ToList());
         }
 
-        // GET: Philosopher/Details/5
+        // Uses route data to locate philosopher in DB based on id parameter
         public ActionResult Details(int? id)
         {
             if (id == null)
