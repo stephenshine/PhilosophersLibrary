@@ -27,6 +27,14 @@ namespace PhilosophersLibrary.DAL
                 .WithMany()
                 .HasForeignKey(p => p.PhilosopherID)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Philosopher>()
+                .Property(p => p.DateOfBirth)
+                .HasColumnType("datetime2");
+
+            modelBuilder.Entity<Philosopher>()
+                .Property(p => p.DateOfDeath)
+                .HasColumnType("datetime2");
         }
     }
 }

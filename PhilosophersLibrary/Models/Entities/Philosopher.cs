@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -14,10 +13,8 @@ namespace PhilosophersLibrary.Models.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [Display(Name = "Date of birth")]
-        [Column(TypeName = "datetime2")]
         public DateTime DateOfBirth { get; set; }
         [Display(Name = "Date of death")]
-        [Column(TypeName = "datetime2")]
         public DateTime DateOfDeath { get; set; }
         public Boolean IsAlive { get; set; }
         public string Description { get; set; }
