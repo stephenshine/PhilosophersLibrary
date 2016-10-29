@@ -86,22 +86,35 @@ namespace PhilosophersLibrary.Controllers
             return View(philosopher);
         }
 
-        // POST: Philosopher/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        // updating edit method to use TryUpdateModel, rather than bind
+        // rename method because signatue matches HttpGet method
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PhilosopherID,FirstName,LastName,DateOfBirth,DateOfDeath,IsAlive,Description,NationalityID,AreaID")] Philosopher philosopher)
+        public ActionResult EditPost(int? id)
         {
-            if (ModelState.IsValid)
+            if (id == null)
             {
-                db.Entry(philosopher).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ViewBag.AreaID = new SelectList(db.Areas, "AreaID", "Name", philosopher.AreaID);
-            ViewBag.NationalityID = new SelectList(db.Nationalities, "NationalityID", "Name", philosopher.NationalityID);
-            return View(philosopher);
+            var philosopherToUpdate = db.Philosophers.Find(id);
+            if (TryUpdateModel(philosopherToUpdate, "",
+                new string[]
+                {
+                    "FirstName", "LastName", "DateOfBirth", "DateOfDeath", "IsAlive", "Description", "NationalityID", "AreaID"
+                }))
+            {
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DataException ex) {
+                    ModelState.AddModelError("", "Unable to save changes. Try again. If unable to resolve contact the administrator.");
+                }
+            }
+            ViewBag.AreaID = new SelectList(db.Areas, "AreaID", "Name", philosopherToUpdate.AreaID);
+            ViewBag.NationalityID = new SelectList(db.Nationalities, "NationalityID", "Name", philosopherToUpdate.NationalityID);
+            return View(philosopherToUpdate);
         }
 
         // GET: Philosopher/Delete/5
