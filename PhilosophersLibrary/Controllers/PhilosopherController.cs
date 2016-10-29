@@ -48,13 +48,20 @@ namespace PhilosophersLibrary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PhilosopherID,FirstName,LastName,DateOfBirth,DateOfDeath,IsAlive,Description,NationalityID,AreaID")] Philosopher philosopher)
+        public ActionResult Create([Bind(Include = "FirstName,LastName,DateOfBirth,DateOfDeath,IsAlive,Description,NationalityID,AreaID")] Philosopher philosopher)
         {
-            if (ModelState.IsValid)
+            try
+            { 
+                if (ModelState.IsValid)
+                {
+                    db.Philosophers.Add(philosopher);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (DataException ex)
             {
-                db.Philosophers.Add(philosopher);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ModelState.AddModelError("", "Unable to save changes. Try again. If unable to resolve contact the administrator.");
             }
 
             ViewBag.AreaID = new SelectList(db.Areas, "AreaID", "Name", philosopher.AreaID);
