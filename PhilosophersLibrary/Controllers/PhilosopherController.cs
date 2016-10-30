@@ -15,9 +15,29 @@ namespace PhilosophersLibrary.Controllers
     {
         private PhilosopherContext db = new PhilosopherContext();
 
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            return View(db.Philosopher.ToList());
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParam = sortOrder == "Date" ? "date_desc" : "Date";
+            var philosophers = from p in db.Philosopher
+                               select p;
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    philosophers = philosophers.OrderByDescending(p => p.LastName);
+                    break;
+                case "Date":
+                    philosophers = philosophers.OrderBy(p => p.DateOfBirth);
+                    break;
+                case "date_desc":
+                    philosophers = philosophers.OrderByDescending(p => p.DateOfBirth);
+                    break;
+                default:
+                    philosophers = philosophers.OrderBy(p => p.LastName);
+                    break;
+            }
+            return View(philosophers.ToList());
         }
 
         // GET: Philosopher/Details/5
