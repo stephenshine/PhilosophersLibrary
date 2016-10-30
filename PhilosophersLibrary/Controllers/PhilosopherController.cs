@@ -117,12 +117,16 @@ namespace PhilosophersLibrary.Controllers
             return View(philosopherToUpdate);
         }
 
-        // GET: Philosopher/Delete/5
-        public ActionResult Delete(int? id)
+
+        public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewBag.ErrorMessage = "Delete failed. Try again. If unable to resolve contact the administrator";
             }
             Philosopher philosopher = db.Philosopher.Find(id);
             if (philosopher == null)
@@ -133,13 +137,20 @@ namespace PhilosophersLibrary.Controllers
         }
 
         // POST: Philosopher/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
-            Philosopher philosopher = db.Philosopher.Find(id);
-            db.Philosopher.Remove(philosopher);
-            db.SaveChanges();
+            try
+            {
+                Philosopher philosopher = db.Philosopher.Find(id);
+                db.Philosopher.Remove(philosopher);
+                db.SaveChanges();
+            }
+            catch (DataException ex)
+            {
+                return RedirectToAction("Delete", new { id = id, saveChangesError = true });
+            }
             return RedirectToAction("Index");
         }
 
