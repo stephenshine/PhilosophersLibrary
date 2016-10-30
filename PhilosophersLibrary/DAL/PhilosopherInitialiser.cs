@@ -6,7 +6,7 @@ using PhilosophersLibrary.Models.Entities;
 
 namespace PhilosophersLibrary.DAL
 {
-    public class PhilosopherInitialiser : System.Data.Entity.DropCreateDatabaseIfModelChanges<PhilosopherContext>
+    public class PhilosopherInitialiser : System.Data.Entity.DropCreateDatabaseAlways<PhilosopherContext>
     {
         protected override void Seed(PhilosopherContext context)
         {
@@ -42,7 +42,7 @@ namespace PhilosophersLibrary.DAL
                     Description = "Here's some text about John Rawls"
                 }
             };
-            philosophers.ForEach(p => context.Philosophers.Add(p));
+            philosophers.ForEach(p => context.Philosopher.Add(p));
             context.SaveChanges();
 
             var nationalities = new List<Nationality>
@@ -57,7 +57,7 @@ namespace PhilosophersLibrary.DAL
                 new Nationality { Name = "Russian" },
                 new Nationality { Name = "American" }
             };
-            nationalities.ForEach(n => context.Nationalities.Add(n));
+            nationalities.ForEach(n => context.Nationality.Add(n));
             context.SaveChanges();
 
             var areas = new List<Area>{
@@ -71,7 +71,7 @@ namespace PhilosophersLibrary.DAL
                 new Area { Name = "Moral philosophy" },
                 new Area { Name = "Epistemology" }
             };
-            areas.ForEach(a => context.Areas.Add(a));
+            areas.ForEach(a => context.Area.Add(a));
             context.SaveChanges();
 
             var books = new List<Book>
@@ -107,7 +107,7 @@ namespace PhilosophersLibrary.DAL
                     AreaID = 3
                 }
             };
-            books.ForEach(b => context.Books.Add(b));
+            books.ForEach(b => context.Book.Add(b));
             context.SaveChanges();
         }
     }

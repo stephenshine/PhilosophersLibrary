@@ -17,7 +17,7 @@ namespace PhilosophersLibrary.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Philosophers.ToList());
+            return View(db.Philosopher.ToList());
         }
 
         // GET: Philosopher/Details/5
@@ -27,7 +27,7 @@ namespace PhilosophersLibrary.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Philosopher philosopher = db.Philosophers.Find(id);
+            Philosopher philosopher = db.Philosopher.Find(id);
             if (philosopher == null)
             {
                 return HttpNotFound();
@@ -38,8 +38,8 @@ namespace PhilosophersLibrary.Controllers
         // GET: Philosopher/Create
         public ActionResult Create()
         {
-            ViewBag.AreaID = new SelectList(db.Areas, "AreaID", "Name");
-            ViewBag.NationalityID = new SelectList(db.Nationalities, "NationalityID", "Name");
+            ViewBag.AreaID = new SelectList(db.Area, "AreaID", "Name");
+            ViewBag.NationalityID = new SelectList(db.Nationality, "NationalityID", "Name");
             return View();
         }
 
@@ -54,7 +54,7 @@ namespace PhilosophersLibrary.Controllers
             { 
                 if (ModelState.IsValid)
                 {
-                    db.Philosophers.Add(philosopher);
+                    db.Philosopher.Add(philosopher);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -64,8 +64,8 @@ namespace PhilosophersLibrary.Controllers
                 ModelState.AddModelError("", "Unable to save changes. Try again. If unable to resolve contact the administrator.");
             }
 
-            ViewBag.AreaID = new SelectList(db.Areas, "AreaID", "Name", philosopher.AreaID);
-            ViewBag.NationalityID = new SelectList(db.Nationalities, "NationalityID", "Name", philosopher.NationalityID);
+            ViewBag.AreaID = new SelectList(db.Area, "AreaID", "Name", philosopher.AreaID);
+            ViewBag.NationalityID = new SelectList(db.Nationality, "NationalityID", "Name", philosopher.NationalityID);
             return View(philosopher);
         }
 
@@ -76,13 +76,13 @@ namespace PhilosophersLibrary.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Philosopher philosopher = db.Philosophers.Find(id);
+            Philosopher philosopher = db.Philosopher.Find(id);
             if (philosopher == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.AreaID = new SelectList(db.Areas, "AreaID", "Name", philosopher.AreaID);
-            ViewBag.NationalityID = new SelectList(db.Nationalities, "NationalityID", "Name", philosopher.NationalityID);
+            ViewBag.AreaID = new SelectList(db.Area, "AreaID", "Name", philosopher.AreaID);
+            ViewBag.NationalityID = new SelectList(db.Nationality, "NationalityID", "Name", philosopher.NationalityID);
             return View(philosopher);
         }
 
@@ -96,7 +96,7 @@ namespace PhilosophersLibrary.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var philosopherToUpdate = db.Philosophers.Find(id);
+            var philosopherToUpdate = db.Philosopher.Find(id);
             if (TryUpdateModel(philosopherToUpdate, "",
                 new string[]
                 {
@@ -112,8 +112,8 @@ namespace PhilosophersLibrary.Controllers
                     ModelState.AddModelError("", "Unable to save changes. Try again. If unable to resolve contact the administrator.");
                 }
             }
-            ViewBag.AreaID = new SelectList(db.Areas, "AreaID", "Name", philosopherToUpdate.AreaID);
-            ViewBag.NationalityID = new SelectList(db.Nationalities, "NationalityID", "Name", philosopherToUpdate.NationalityID);
+            ViewBag.AreaID = new SelectList(db.Area, "AreaID", "Name", philosopherToUpdate.AreaID);
+            ViewBag.NationalityID = new SelectList(db.Nationality, "NationalityID", "Name", philosopherToUpdate.NationalityID);
             return View(philosopherToUpdate);
         }
 
@@ -124,7 +124,7 @@ namespace PhilosophersLibrary.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Philosopher philosopher = db.Philosophers.Find(id);
+            Philosopher philosopher = db.Philosopher.Find(id);
             if (philosopher == null)
             {
                 return HttpNotFound();
@@ -137,8 +137,8 @@ namespace PhilosophersLibrary.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Philosopher philosopher = db.Philosophers.Find(id);
-            db.Philosophers.Remove(philosopher);
+            Philosopher philosopher = db.Philosopher.Find(id);
+            db.Philosopher.Remove(philosopher);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

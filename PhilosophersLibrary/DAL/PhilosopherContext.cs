@@ -10,12 +10,16 @@ namespace PhilosophersLibrary.DAL
 {
     public class PhilosopherContext : DbContext
     {
-        public PhilosopherContext() : base("PhilosopherContext") { }
 
-        public DbSet<Philosopher> Philosophers { get; set; }
-        public DbSet<Area> Areas { get; set; }
-        public DbSet<Nationality> Nationalities { get; set; }
-        public DbSet<Book> Books { get; set; }
+        public DbSet<Philosopher> Philosopher { get; set; }
+        public DbSet<Area> Area { get; set; }
+        public DbSet<Nationality> Nationality { get; set; }
+        public DbSet<Book> Book { get; set; }
+
+        public PhilosopherContext() : base("PhilosopherContext")
+        {
+            Database.SetInitializer(new PhilosopherInitialiser());
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
